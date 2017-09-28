@@ -36,6 +36,10 @@
         </style>
     </head>
     <body>
+        <div class="visible-print text-center">
+            {!! QrCode::size(100)->generate(Request::url()); !!}
+            <p>Scan me to return to the original page.</p>
+        </div>
         <div class="container">
             <div class="content">
                 <div class="title">Laravel 5</div>

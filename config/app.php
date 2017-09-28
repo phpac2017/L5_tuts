@@ -147,6 +147,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         'Maatwebsite\Excel\ExcelServiceProvider',
+        LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
 
     ],
 
@@ -199,6 +201,7 @@ return [
         'Html' => 'Collective\Html\HtmlFacade',
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
     ],
 

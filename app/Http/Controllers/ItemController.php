@@ -10,10 +10,16 @@ use DB;
 use Excel;
 use PDF;
 use App\Item;
+use Redirect;
+use Log;
+use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
+
 
 class ItemController extends Controller
 {
-    
+    public function test(){
+        
+    }
 
     /**
 
@@ -45,6 +51,35 @@ class ItemController extends Controller
 
         return view('pdfview');
 
+    }
+
+    public function mail()
+    {
+        $items = Item::get()->toArray();
+        //echo "<pre>";print_r($items);exit;
+        $today = date("Y-m-d H:i:s");
+        $subject = 'Sendgrid Testing';
+        $data = array ('to'=>'govindarajk@sensiple.com','subject'=>$subject,'items'=>$items);
+
+        \Mail::send('emails.mailEvent', $data, function($message) use ($data) {
+                 //email 'From' field: Get users email add and name
+               // $message->from('donotreply@harvardmaint.com');
+                //email 'To' field: change this to emails that you want to be notified.
+                $message->to($data['to'])->subject($data['subject']);
+        });
+        $message = '';
+        if( count(\Mail::failures()) > 0 ) 
+        {
+           Log::info('Form Mail sent status - There was one or more failures.');
+           foreach(\Mail::failures as $email_address){
+               Log::info('Mail Address '.$email_address);
+           }
+        } else {
+               Log::info("Mail sent status - Mail sent successfully.");
+        }        
+        $message =  "Mail Sent Successfully.";
+        
+        return Redirect::to('/')->with('message' ,$message);
     }
 
 
